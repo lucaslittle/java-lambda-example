@@ -5,7 +5,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.S3Event;
+import com.amazonaws.services.lambda.runtime.events.S3Event;
 import com.amazonaws.services.s3.model.S3Object;
 
 import java.io.BufferedReader;
@@ -29,8 +29,10 @@ public class LambdaFunctionHandler implements RequestHandler<S3Event, String> {
             String contentType = response.getObjectMetadata().getContentType();
 
             BufferedReader br = new BufferedReader(new InputStreamReader(response.getObjectContent()));
+            String csvOutput;
             while ((csvOutput = br.readLine()) != null) {
-                context.getLogger().log("I read a line");
+                // do something
+                System.out.println(csvOutput);
             }
         } catch (IOException ioe) {
             context.getLogger().log(ioe.getMessage());
